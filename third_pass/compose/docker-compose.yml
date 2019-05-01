@@ -1,0 +1,20 @@
+version: "3.0"
+services:
+  app:
+    build: ./                     # Build Dockerfile in current directory
+    ports:
+      - 4300:4300
+  nginx:
+    image: ployst/nginx-ssl-proxy # use image from hub.docker.com
+    environment:
+      ENABLE_SSL: "true"
+      TARGET_SERVICE: 172.17.0.1:4300 #my docker env
+      SERVER_NAME: localhost
+    volumes:
+      - ./certs/lh.crt:/etc/secrets/proxycert
+      - ./certs/lh.key:/etc/secrets/proxykey
+      - ./certs/dhparam.pem:/etc/secrets/dhparam
+    ports:
+      - 443:443
+    links:
+      - app

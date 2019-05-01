@@ -33,3 +33,4 @@ John
 https://blog.goodstuff.im/docker_not_prime_time
 I'm having problems with giving this talk.  try to get them wanting to use docker before trying to explain it.
  docker's hard to explain so lets look at some of the problems it solves...
+https://news.ycombinator.com/item?id=5408002
