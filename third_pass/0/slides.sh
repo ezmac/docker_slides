@@ -7,20 +7,17 @@ catimg () {
                 echo "catimg need convert (ImageMagick) to work)"
         fi
 }
-feh -. DockerFail.png
-catimg DockerFail.png
-echo "Docker, the good, the bad, and the ugly"
+#catimg docker_fail_whale.png
+echo "replace acheive with achieve"
+echo spellcheck
 read
 # don't judge me, I just wanted to make it run.
-for i in `ls ./**/*.md`; do
+for i in `ls ./*.md`; do
   slides="$slides $i"
 done
 
 xmodmap ~/dotfiles/.kensington_remote
-
-
 # 56-bottom 71-top
 vim "+noremap n :next<CR>" "+noremap p :prev<CR>" "+noremap <Home> :prev<CR>" "+noremap <End> :next<CR>"$slides
-
 
 

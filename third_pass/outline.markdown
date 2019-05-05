@@ -6,8 +6,8 @@
     3. Who uses docker
     4. Usage statistics
     5. Integrations
-    7. Benefits
-    8. Problems solved by Docker
+    7. Problems solved by Docker
+    8. Benefits
     Might be useful to introduce the container before benefits?  Unsure.
   1. The container
     0. The container
