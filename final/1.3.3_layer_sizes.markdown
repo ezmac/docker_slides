@@ -1,0 +1,22 @@
+
+```Dockerfile
+FROM ubuntu:latest
+RUN apt-get update && apt-get install -y python python-pip
+
+```
+
+```Dockerfile
+FROM ubuntu:latest
+RUN apt-get update && apt-get install -y python python-pip && rm -rf /var/lib/apt/lists/
+```
+
+```Dockerfile
+FROM ubuntu:latest
+RUN apt-get update && apt-get install --no-install-recommends -y python python-pip && rm -rf /var/lib/apt/lists/
+```
+
+`docker image inspect ubuntu-size-1 --format='{{.Size}}'` == 455732169 (434.6MB)
+`docker image inspect ubuntu-size-2 --format='{{.Size}}'` == 430193452 (410.3MB)
+`docker image inspect ubuntu-size-3 --format='{{.Size}}'` == 122276313 (116.6MB)
+
+
