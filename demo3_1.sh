@@ -10,5 +10,6 @@ docker run -d --rm --name=mongodb --env-file=.env mongo
 
 echo -e "${red}Starting app container with ${lpurp}"
 echo -e " docker run --name app --rm --init --env-file=.env --link mongodb -p 4300:4300 compose_app ${NC}"
+echo "visit http://localhost:4300/hello"
 docker run --name app --rm --init --env-file=.env --link mongodb -p 4300:4300 compose_app 2>/dev/null 1>/dev/null
-docker stop app mongodb
+docker stop mongodb 2>/dev/null 1>/dev/null

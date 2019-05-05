@@ -1,5 +1,9 @@
 # Intro
 
+ - Tad Merchant
+   DevOps Enginerd @ Cornell
+   - I hate powerpoint
+
  - Meta
    - about docker, users of docker, history, etc
  - Good; Woven into how to use Docker
@@ -9,3 +13,5 @@
  - Bad
  - Ugly
  - Reflection
+
+ - Beer?

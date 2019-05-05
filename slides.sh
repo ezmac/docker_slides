@@ -7,9 +7,7 @@ catimg () {
                 echo "catimg need convert (ImageMagick) to work)"
         fi
 }
-#catimg docker_fail_whale.png
-echo spellcheck
-read
+feh DockerFail.png -.
 
 
 # For this slide deck, I use md as the extension.
@@ -25,4 +23,5 @@ xmodmap ~/dotfiles/.kensington_remote
 # 56-bottom 71-top
 vim "+noremap n :next<CR>" "+noremap p :prev<CR>" "+noremap <Home> :prev<CR>" "+noremap <End> :next<CR>"$slides
 
+catimg DockerFail.png
 
