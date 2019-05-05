@@ -1,7 +1,7 @@
 [ req ]
 prompt = no
 default_bits = 2048
-default_keyfile = kosher.key
+default_keyfile = key.key
 encrypt_key = no
 distinguished_name = req_distinguished_name
 
