@@ -1,0 +1,744 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>reveal.js</title>
+
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/black.css">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/monokai.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <section data-markdown>
+  <textarea data-template>
+  # The problem
+ - Hardware is expensive
+ - Software is not perfect
+
+# Solution:
+ - Share hardware
+ - Isolate software
+      A paragraph with some text and a [link](http://hakim.se).
+  </textarea>
+</section>
+  
+  <section data-markdown>
+  <textarea data-template>
+  # What is Docker
+
+ - Container engine and runtime
+ - Linux focused
+ - Makes developing, deploying, and managing software easier
+      A paragraph with some text and a [link](http://hakim.se).
+  </textarea>
+</section>
+  
+  <section data-markdown>
+  <textarea data-template>
+  # History
+
+ - March 2013: Docker announced at PyCon
+ - September 2013: Docker+OpenShift announced by RedHat
+ - June 2014: 1.0 GA release
+ - November 2014: AWS ECS released; orchestrates Docker on EC2.
+ - December 2014: IBM strategic partnership announced.
+   ...
+ - Recent history is less interesting for this talk
+      A paragraph with some text and a [link](http://hakim.se).
+  </textarea>
+</section>
+  
+  <section data-markdown>
+  <textarea data-template>
+  # Who uses Docker?
+
+## Big names:
+ - Facebook
+ - Amazon
+ - Apple
+ - Netflix
+ - Google
+
+ - Uber
+ - Lyft
+ - Twitter
+ - Cornell University #We got a feature [1]
+
+
+# sources
+[1] https://www.docker.com/customers/cornell-university
+      A paragraph with some text and a [link](http://hakim.se).
+  </textarea>
+</section>
+  
+  <section data-markdown>
+  <textarea data-template>
+  # Usage statistics
+
+## StackOverflow developer survey (2019)
+ - Most wanted platform
+ - Second most loved platform
+ - Third most used platform
+
+### Do you use containers
+ - 46.1% No
+ - 38.4% in Dev
+ - 30.2% in Test
+ - 25.9% in Prod
+
+## Snyk container survey (2019)
+ - 57% use containers
+ - 14% plan to
+
+
+
+
+
+## sources
+https://res.cloudinary.com/snyk/image/upload/v1555510939/shifting_docker_security_left_2019.pdf
+https://insights.stackoverflow.com/survey/2019#technology
+      A paragraph with some text and a [link](http://hakim.se).
+  </textarea>
+</section>
+  
+  <section data-markdown>
+  <textarea data-template>
+  # Integrates with:
+
+ - *Amazon Web Services*
+ - Ansible
+ - CFEngine
+ - Chef
+ - *Google Cloud Platform*
+ - IBM Bluemix
+ - HPE Helion Stackato
+ - Jelastic
+ - Jenkins
+ - Kubernetes
+ - *Microsoft Azure*
+ - OpenStack Nova
+ - OpenSVC
+ - Oracle Container Cloud Service
+ - Puppet
+ - ProGet
+ - Salt
+ - Vagrant
+ - VMware vSphere Integrated Containers
+ - ...
+      A paragraph with some text and a [link](http://hakim.se).
+  </textarea>
+</section>
+  
+  <section data-markdown>
+  <textarea data-template>
+  # What problems does it solve?
+
+Docker provides a clean contract with the underlying operating system
+
+ - Efficient use of host resources
+ - Immutable infrastructure
+ - Software isolation
+ - Dev/Test/Prod parity
+ - Scaling
+      A paragraph with some text and a [link](http://hakim.se).
+  </textarea>
+</section>
+  
+  <section data-markdown>
+  <textarea data-template>
+  # Benefits
+
+ - Faster and more reliable deployments
+ - Easier rollback
+ - Portability
+ - Lower infrastructure and operations costs
+      A paragraph with some text and a [link](http://hakim.se).
+  </textarea>
+</section>
+  
+  <section data-markdown>
+  <textarea data-template>
+  # What does it actually do?
+
+ - Isolation
+   - Limited view of host
+   - Can enforce resource limits
+ - Ease of use
+   - Built on namespaces, union file systems, chroot, cgroups, capabilities, etc
+   - Greater than the sum of its parts
+ - Portability
+   - Container runs wherever docker engine runs *
+   - Image packages everything but the kernel
+ - Lower overhead **
+   - Shared OS kernel
+   - No emulation
+ - Better shipping (deploys)
+   - Install packages at build time
+   - Ship layers as tarballs
+
+
+
+
+
+
+
+## caveat
+ - * containers are os and architecture specific; containers built for docker/arm64 won't work on docker/amd64. Some config options may limit portability.  These are exceptions though.
+ - ** Lower overhead compared to virtual machines.  Network performance is dependent on configuration but can reach native speed.
+      A paragraph with some text and a [link](http://hakim.se).
+  </textarea>
+</section>
+  
+  <section data-markdown>
+  <textarea data-template>
+  # Containers in 2 minutes:
+
+ - Packaged unit of software
+ - With os assisted isolation
+
+
+   Docker containers consists of:
+   - Image
+     - Root filesystem (base image + changes)
+   - Standard set of instruction
+     - Used to build image and run a container
+   - Execution environment (engine)
+     - Configuration of host/container
+     - Manages running containers
+
+A container is a running image
+      A paragraph with some text and a [link](http://hakim.se).
+  </textarea>
+</section>
+  
+  <section data-markdown>
+  <textarea data-template>
+  # Core principles:
+
+ - One task per container
+ - Composable containers
+ - Ephemerality
+
+# Problems where Docker is well-suited
+
+ - Web servers
+ - Daemons
+ - Short lived tasks
+
+# When you (maybe) should not use Docker
+
+ - DATABASES
+
+ - Docker has a large learning overhead
+   - when compared to doing nothing
+ - Docker through a VM can be painful (mac/windows)
+ - Supporting less technical users
+ - Docker is not security
+ - GUI applications
+      A paragraph with some text and a [link](http://hakim.se).
+  </textarea>
+</section>
+  
+  <section data-markdown>
+  <textarea data-template>
+  # Installing
+Docker engine releases for:
+ - Centos
+ - Debian
+ - Fedora
+ - Ubuntu
+and others
+ - Windows ???
+
+Docker Desktop for:
+ - macOS
+ - Windows 10
+
+Follow the instructions at https://docs.docker.com/install/
+      A paragraph with some text and a [link](http://hakim.se).
+  </textarea>
+</section>
+  
+  <section data-markdown>
+  <textarea data-template>
+  # Post install
+ - Linux
+   - Docker listens on /var/run/docker.sock
+   - Docker.sock group owned by docker
+   - Add yourself to this group; relog to apply group changes
+ - macOS
+   - Docker Desktop should handle config for you
+ - Windows
+   - You can switch between windows and linux containers
+   - Sorry, you're on your own.
+
+## References:
+
+https://docs.docker.com/docker-for-mac/install/
+https://docs.docker.com/docker-for-windows/install/
+      A paragraph with some text and a [link](http://hakim.se).
+  </textarea>
+</section>
+  
+  <section data-markdown>
+  <textarea data-template>
+  # Docker tools
+ - Container
+ - Image
+ - Network
+ - Volume
+ - Repositories
+ - Compose
+ - Swarm (node, config, secret, service, stack, system, trust)
+   - If not using swarm, these are not useful
+ - ...
+
+# Commands
+ - build, tag, push, pull
+ - run, start, stop, kill
+ - exec, attach, logs
+ - ps, stats, top
+ - rm, rmi
+ - ...
+ - `docker [command] --help`
+      A paragraph with some text and a [link](http://hakim.se).
+  </textarea>
+</section>
+  
+  <section data-markdown>
+  <textarea data-template>
+  # Running a container
+Simple as `docker run image`
+
+`docker run -it --rm docker/surprise`
+
+## protip
+  Use ctrl p + q - detach from container without stopping
+
+
+## demos
+ - ./demo1.sh
+      A paragraph with some text and a [link](http://hakim.se).
+  </textarea>
+</section>
+  
+  <section data-markdown>
+  <textarea data-template>
+  # Common options for docker run
+
+ - `-i` interactive session (use stdin)
+ - `-t` allocate tty (use stdout)
+ - `-d` detach (run in background)
+ - `--name mycontainer`
+ - `-v host:container:permissions` volume mounting
+ - `-p host:container` port mapping
+ - `-e VAR_NAME=value` environmental variables
+ - `--rm` remove container after it exits
+      A paragraph with some text and a [link](http://hakim.se).
+  </textarea>
+</section>
+  
+  <section data-markdown>
+  <textarea data-template>
+  # External data
+
+## Volumes vs Bind mounts
+ - Bind mounts use your file system directly
+   - Direct
+   - Easy to manage with traditional tools
+
+ - Volumes stored in docker area of file system
+   - Indirect
+   - "Easy" to manage with docker
+   - *allows volume drivers*
+
+
+## -v vs --mount
+
+ - `--mount` preferred (by docker) because it is "simpler"
+
+ - `-v source:container_path[:ro_rw_mode]` #rw is default mode
+     - `-v /host/path:/container/path:ro`  # bind mount, read only (ex. 1)
+     - `-v volume_name:/container/path` # volume without mode, read write (ex. 2)
+ - Order is important
+
+
+ - `--mount source=source,destination=container_path[,type=volume,bind,tmpfs][readonly]`
+     - `--mount src=/host/path,dst=/container/path,type=bind,readonly`  # bind mount, read only (ex. 1)
+     - `--mount src=volume_name,dst=/container/path`  # volume without mode, read write (ex. 2)
+ - Order is NOT important
+ - Do not use spaces
+
+
+## demos
+ - ./demo2.sh
+
+
+## references:
+[1]: https://docs.docker.com/storage/volumes/
+[2]: https://docs.docker.com/storage/bind-mounts/
+      A paragraph with some text and a [link](http://hakim.se).
+  </textarea>
+</section>
+  
+  <section data-markdown>
+  <textarea data-template>
+  # Networking
+
+## exposing ports
+docker run `-p 8008:80`
+ - Expose container port 80 on host port 8008
+ - Gets weird on not linux because "host" is a virtual machine
+
+
+## linking containers
+docker run `--link other_container:name` or `--link other_container`
+ - Docker can link containers over "network"
+ - Considered "old" and may be removed in the future. [1]
+   - Even though it's the only way in ecs [2]
+
+## user defined networks
+docker run `--network internauts container`
+docker run `--network internauts other_container`
+
+
+
+
+## demos
+ - ./demo3_1.sh
+ - ./demo3_2.sh
+
+
+# references
+[1]: https://docs.docker.com/network/links/
+[2]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#container_definition_network
+      A paragraph with some text and a [link](http://hakim.se).
+  </textarea>
+</section>
+  
+  <section data-markdown>
+  <textarea data-template>
+  # Dockerfile basics
+```
+FROM ubuntu:latest
+
+RUN apt-get update && apt-get install -y python python-pip
+
+```
+      A paragraph with some text and a [link](http://hakim.se).
+  </textarea>
+</section>
+  
+  <section data-markdown>
+  <textarea data-template>
+  # Build
+
+ - `docker built -t ubuntu-python .`
+ - `docker built -t ubuntu-python -f basic.dockerfile .`
+
+
+
+# Common options for docker build
+
+ - `-f` specify dockerfile name
+ - `-t` name and optionally tag image
+ - `--no-cache` do not use cache (force rebuild)
+ - `--pull` always try to pull newer version of image
+ - Last argument is build context (will be sent to docker engine)
+      A paragraph with some text and a [link](http://hakim.se).
+  </textarea>
+</section>
+  
+  <section data-markdown>
+  <textarea data-template>
+  # Dockerfile syntax
+ - one instruction per line
+ - continuation of lines with \
+ - `INSTRUCTION arguments`
+ - `# Comments`
+
+
+
+## INSTRUCTIONS
+ - `ADD`, `ARG`, `CMD`, `COPY`, `ENTRYPOINT`, `ENV`
+ - `EXPOSE`, `FROM`, `HEALTHCHECK`, `LABEL`, `ONBUILD`
+ - `RUN`, `SHELL`, `STOPSIGNAL`, `USER`, `VOLUME`, `WORKDIR`
+
+## references
+https://docs.docker.com/engine/reference/builder/
+      A paragraph with some text and a [link](http://hakim.se).
+  </textarea>
+</section>
+  
+  <section data-markdown>
+  <textarea data-template>
+  # Layers
+ - RUN, COPY, and ADD create layers
+ - layer contains only changes from previous layer
+ - seemingly small changes can be large
+   - chmod creates a full copy of all files touched [0]
+
+
+## sources
+[0] ./demo4.sh
+
+Yes, I cited myself
+      A paragraph with some text and a [link](http://hakim.se).
+  </textarea>
+</section>
+  
+  <section data-markdown>
+  <textarea data-template>
+  # ENTRYPOINT vs CMD
+ - `["exec", "form"]`
+ - `"shell form"`
+ - Don't use shell form
+ - ENTRYPOINT is the main command for the image
+   - Usually set by base image; ["/bin/sh", "-c"]
+ - CMD will be appended to entrypoint (if using exec form)
+ - CMD is good for most purposes
+ - ENTRYPOINT for advanced usage
+      A paragraph with some text and a [link](http://hakim.se).
+  </textarea>
+</section>
+  
+  <section data-markdown>
+  <textarea data-template>
+  # ENTRYPOINT vs CMD
+ - `["exec", "form"]`
+ - `"shell form"`
+ - Don't use shell form
+ - ENTRYPOINT is the main command for the image
+   - Usually set by base image; ["/bin/sh", "-c"]
+ - CMD will be appended to entrypoint (if using exec form)
+ - CMD is good for most purposes
+ - ENTRYPOINT for advanced usage
+      A paragraph with some text and a [link](http://hakim.se).
+  </textarea>
+</section>
+  
+  <section data-markdown>
+  <textarea data-template>
+  # Docker hub and repositories
+ - repositories are a central store for images
+ - hub.docker.com (public)
+ - DTR can be deployed for a private trusted repository
+ - AWS ECR
+
+# Tags
+
+  `[repository/]image[:tag]`
+  `0xxxxxx9.dkr.ecr.us-east-1.amazonaws.com/mycontainer:test`
+
+ - reference to an image
+ - can specify repository, name, and tag
+ - an image may have multiple tags
+
+ - to push an image to a repository, image must be tagged with that repository
+     `docker tag source_image[:tag] repository/target_image[:tag]`
+ - use `docker push repo/image_name:tag` and `docker pull repo/image_name:tag`
+      A paragraph with some text and a [link](http://hakim.se).
+  </textarea>
+</section>
+  
+  <section data-markdown>
+  <textarea data-template>
+  # Docker compose
+ - Simple yaml format for running containers
+ - Define parameters for running 1-N containers
+   - Includes container networking
+ - `docker-compose up`
+ - `docker-compose build`
+ - `docker-compose stop`
+ - Default file name: `docker-compose.yml`
+
+## DEMO TIME
+      A paragraph with some text and a [link](http://hakim.se).
+  </textarea>
+</section>
+  
+  <section data-markdown>
+  <textarea data-template>
+  # Bad parts of docker
+
+
+ - hub.docker.com got hacked a couple weeks ago
+
+ - backwards compatability
+ - invisibility inside container (vuln scanning, patching, etc)
+ - throw out traditional tools
+ - immutability means no patching
+   - rebuild/replace only
+ - it's still Linux
+   - file permissions/users
+   - process model
+   - init
+ - secrets
+   - not supported unless you're on swarm
+
+ - when bind mounting, you can mess up files on host
+   - bad ownership
+   - deleting them entirely
+ - container escapes are still possible
+ - get ready to learn a lot of linux (is that really a bad thing?)
+ - Did you notice how we just ignore huge parts of it?
+   - seriously who uses swarm in production?
+ - Docker on rhel..  is that a thing?
+ - Do you even file system?
+   - btrfs, aufs, overlay, overlay2, zfs?
+ - kernel minimums
+ - rebuild servers constantly
+ - Even stable is bleeding edge
+   - Date check everything
+
+ - engine runs as root
+   - oh exploitable
+
+
+## My notes
+You know how sometimes you get rushed on a project and you have to cut corners? then people demand new features but you can't take time to rewrite?
+And it's in use, so you can't go back and change it?
+
+Also, it's your company's enterprise solution?  yah, that's docker
+      A paragraph with some text and a [link](http://hakim.se).
+  </textarea>
+</section>
+  
+  <section data-markdown>
+  <textarea data-template>
+  # The battle for dominance
+
+ - containerd vs cri0 vs rkt vs ...
+ - kubernetes vs docker
+   - and kubernetes is throwing heavy punches
+ - open container initiative
+   - cri-o
+   - rkt
+   - docker engine
+   - containerd
+ - this is fine!
+      A paragraph with some text and a [link](http://hakim.se).
+  </textarea>
+</section>
+  
+  <section data-markdown>
+  <textarea data-template>
+  # Ugly
+
+ - Bind mounts on OSX are terribly slow
+ - Building images on Windows is terribly slow
+ - using docker anywhere but on linux is probably still a bad idea
+ - the two most popular base images have over 500 vulns
+   - https://old.reddit.com/r/docker/comments/bem654/the_top_two_most_popular_docker_base_images_each/
+ - orchestration is another talk
+   - can be it's own bundle of ugly
+      A paragraph with some text and a [link](http://hakim.se).
+  </textarea>
+</section>
+  
+  <section data-markdown>
+  <textarea data-template>
+  # Is docker worth it?
+
+ - That's your decision
+   - (the correct decision is YES)
+ - Benefits are huge
+ - The negatives also exist
+   - but come on.. no one wants to be safe all the time, right?
+      A paragraph with some text and a [link](http://hakim.se).
+  </textarea>
+</section>
+  
+  <section data-markdown>
+  <textarea data-template>
+  
+
+
+# Questions?
+
+
+
+# Shameless self promotion
+ - github: ezmac; PR me!
+   - https://github.com/ezmac/docker_slides
+ - gmail: system.root
+ - twitter: systemroot; don't @me, bruh
+ - reddit: nah, we ain't that close
+ - facebook: deleted
+ - instagram: srsly? no.
+
+ - hat tip to [fishdavidson](https://fishdavidson.com) for the failwhale docker mashup
+
+Are you devops? I have sadnessatscale.com and want to put DevOps on it.
+      A paragraph with some text and a [link](http://hakim.se).
+  </textarea>
+</section>
+  
+      </div>
+    </div>
+
+    <script src="js/reveal.js"></script>
+
+    <script>
+      // More info about config & dependencies:
+      // - https://github.com/hakimel/reveal.js#configuration
+      // - https://github.com/hakimel/reveal.js#dependencies
+      Reveal.initialize({
+        dependencies: [
+          { src: 'plugin/markdown/marked.js' },
+          { src: 'plugin/markdown/markdown.js' },
+          { src: 'plugin/notes/notes.js', async: true },
+          { src: 'plugin/highlight/highlight.js', async: true }
+        ]
+      });
+    </script>
+  </body>
+</html>
