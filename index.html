@@ -8,7 +8,7 @@
 
     <link rel="stylesheet" href="reveal.js-3.8.0/css/reset.css">
     <link rel="stylesheet" href="reveal.js-3.8.0/css/reveal.css">
-    <link rel="stylesheet" href="reveal.js-3.8.0/css/theme/black.css">
+    <link rel="stylesheet" href="reveal.js-3.8.0/css/theme/solarized.css">
     <link rel="stylesheet" href="reveal-customize.css">
 
     <!-- Theme used for syntax highlighting of code -->
@@ -58,13 +58,14 @@
   
   
   
+  
   <section data-markdown>
   <textarea data-template>
-  # The problem
+  ## The problem
  - Hardware is expensive
  - Software is not perfect
 
-# Solution:
+## Solution:
  - Share hardware
  - Isolate software
     </textarea>
@@ -98,21 +99,17 @@
   <textarea data-template>
   # Who uses Docker?
 
-## Big names:
- - Facebook
- - Amazon
- - Apple
- - Netflix
- - Google
 
+ - Facebook, Amazon, Apple, Netflix, Google
  - Uber
  - Lyft
  - Twitter
  - Cornell University #We got a feature [1]
 
 
-# sources
-[1] https://www.docker.com/customers/cornell-university
+
+#### sources
+ - [1] https://www.docker.com/customers/cornell-university
     </textarea>
 </section>
   
@@ -140,8 +137,8 @@
 
 
 ## sources
-https://res.cloudinary.com/snyk/image/upload/v1555510939/shifting_docker_security_left_2019.pdf
-https://insights.stackoverflow.com/survey/2019#technology
+ - https://res.cloudinary.com/snyk/image/upload/v1555510939/shifting_docker_security_left_2019.pdf
+ - https://insights.stackoverflow.com/survey/2019#technology
     </textarea>
 </section>
   
@@ -179,10 +176,9 @@ https://insights.stackoverflow.com/survey/2019#technology
 Docker provides a clean contract with the underlying operating system
 
  - Efficient use of host resources
- - Immutable infrastructure
+ - Reproducability
+ - Portability
  - Software isolation
- - Dev/Test/Prod parity
- - Scaling
     </textarea>
 </section>
   
@@ -190,10 +186,13 @@ Docker provides a clean contract with the underlying operating system
   <textarea data-template>
   # Benefits
 
- - Faster and more reliable deployments
- - Easier rollback
- - Portability
+ - Faster, more reliable deployments
+ - Dev/Test/Prod parity
  - Lower infrastructure and operations costs
+ - Immutable infrastructure
+ - CI/CD and testing
+ - Flexibility
+ - Scaling
     </textarea>
 </section>
   
@@ -224,7 +223,7 @@ Docker provides a clean contract with the underlying operating system
 
 
 ## caveat
- - * containers are os and architecture specific; containers built for docker/arm64 won't work on docker/amd64. Some config options may limit portability.  These are exceptions though.
+ - \* containers are os and architecture specific; containers built for docker/arm64 won't work on docker/amd64. Some config options may limit portability.  These are exceptions though.
  - ** Lower overhead compared to virtual machines.  Network performance is dependent on configuration but can reach native speed.
     </textarea>
 </section>
@@ -237,14 +236,14 @@ Docker provides a clean contract with the underlying operating system
  - With os assisted isolation
 
 
-   Docker containers consists of:
-   - Image
-     - Root filesystem (base image + changes)
-   - Standard set of instruction
-     - Used to build image and run a container
-   - Execution environment (engine)
-     - Configuration of host/container
-     - Manages running containers
+Docker containers consists of:
+ - Image
+   - Root filesystem (base image + changes)
+ - Standard set of instruction
+   - Used to build image and run a container
+ - Execution environment (engine)
+   - Configuration of host/container
+   - Manages running containers
 
 A container is a running image
     </textarea>
@@ -263,16 +262,13 @@ A container is a running image
  - Web servers
  - Daemons
  - Short lived tasks
+ - Anything stateless
 
-# When you (maybe) should not use Docker
+# Avoid Docker for
 
- - DATABASES
-
- - Docker has a large learning overhead
-   - when compared to doing nothing
- - Docker through a VM can be painful (mac/windows)
+ - Databases (maybe)
  - Supporting less technical users
- - Docker is not security
+ - Security
  - GUI applications
     </textarea>
 </section>
@@ -293,24 +289,10 @@ Docker Desktop for:
  - Windows 10
 
 Follow the instructions at https://docs.docker.com/install/
-    </textarea>
-</section>
-  
-  <section data-markdown>
-  <textarea data-template>
-  # Post install
- - Linux
-   - Docker listens on /var/run/docker.sock
-   - Docker.sock group owned by docker
-   - Add yourself to this group; relog to apply group changes
- - macOS
-   - Docker Desktop should handle config for you
- - Windows
-   - You can switch between windows and linux containers
-   - Sorry, you're on your own.
+
+
 
 ## References:
-
 https://docs.docker.com/docker-for-mac/install/
 https://docs.docker.com/docker-for-windows/install/
     </textarea>
@@ -427,7 +409,7 @@ docker run `-p 8008:80`
 docker run `--link other_container:name` or `--link other_container`
  - Docker can link containers over "network"
  - Considered "old" and may be removed in the future. [1]
-   - Even though it's the only way in ecs [2]
+   - Even though it's the only way in ECS [2]
 
 ## user defined networks
 docker run `--network internauts container`
@@ -582,41 +564,61 @@ Yes, I cited myself
   
   <section data-markdown>
   <textarea data-template>
+  # Docker for devops
+
+ - Test/Prod parity
+   - config pulled on container start
+   - git branch for test/prod deploy
+ - Git + Jenkins = Automated deploy
+   - Build image/push to ECR
+   - use ELB and ECS container replacement for safe deploy
+   - side effect: one click re-deploy through Jenkins
+ - Run sftp servers
+   - https://github.com/atmoz/sftp
+   - bind mount for persistance and keys
+   - configured through environment
+   - less risk of breaking server through automation
+    </textarea>
+</section>
+  
+  <section data-markdown>
+  <textarea data-template>
+  # Docker for devops (part deux)
+
+ - Git + Jenkins + docker
+   - automated npm audit
+     - Fail job if `npm audit` fails
+ - run tests against container pre deploy
+   - Fail job if tests fail
+ - schedule rebuilds and deploys
+   - up to date all the time
+ - tag images with build number
+   - rollback means deploying previous build tag
+ - scaling
+   - need more capacity? Add a server to the cluster
+   - need more load handling? Start more containers
+ - flexible
+   - ecs, kubernetes, rancher, docker enterprise
+   - you decide the orchestration
+    </textarea>
+</section>
+  
+  <section data-markdown>
+  <textarea data-template>
   # Bad parts of docker
 
-
- - hub.docker.com got hacked a couple weeks ago
-
- - backwards compatability
- - invisibility inside container (vuln scanning, patching, etc)
- - throw out traditional tools
- - immutability means no patching
-   - rebuild/replace only
- - it's still Linux
-   - file permissions/users
-   - process model
-   - init
- - secrets
-   - not supported unless you're on swarm
-
- - when bind mounting, you can mess up files on host
-   - bad ownership
-   - deleting them entirely
- - container escapes are still possible
- - get ready to learn a lot of linux (is that really a bad thing?)
- - Did you notice how we just ignore huge parts of it?
-   - seriously who uses swarm in production?
- - Docker on rhel..  is that a thing?
- - Do you even file system?
-   - btrfs, aufs, overlay, overlay2, zfs?
- - kernel minimums
- - rebuild servers constantly
- - Even stable is bleeding edge
-   - Date check everything
-
- - engine runs as root
-   - oh exploitable
-
+ - Bind mounts on OSX are terribly slow
+   - Fsnotify may not work correctly
+   - they're still working on it
+ - Building images on Windows is terribly slow
+ - Docker is still primarily for Linux
+ - Public docker base images can have tons of vulnerabilities
+   - up to you to patch constantly
+ - It's still "bleeding edge" and moving fast
+   - date check everything you read
+ - Security tools haven't caught up yet
+ - Many approaches to using it; no consensus on correct way
+ - Suffering from success
 
 ## My notes
 You know how sometimes you get rushed on a project and you have to cut corners? then people demand new features but you can't take time to rewrite?
@@ -631,7 +633,7 @@ Also, it's your company's enterprise solution?  yah, that's docker
   # The battle for dominance
 
  - containerd vs cri0 vs rkt vs ...
- - kubernetes vs docker
+ - kubernetes vs everyone else
    - and kubernetes is throwing heavy punches
  - open container initiative
    - cri-o
@@ -639,6 +641,9 @@ Also, it's your company's enterprise solution?  yah, that's docker
    - docker engine
    - containerd
  - this is fine!
+
+## sources
+ - https://www.opencontainers.org/
     </textarea>
 </section>
   
@@ -646,13 +651,29 @@ Also, it's your company's enterprise solution?  yah, that's docker
   <textarea data-template>
   # Ugly
 
- - Bind mounts on OSX are terribly slow
- - Building images on Windows is terribly slow
- - using docker anywhere but on linux is probably still a bad idea
- - the two most popular base images have over 500 vulns
-   - https://old.reddit.com/r/docker/comments/bem654/the_top_two_most_popular_docker_base_images_each/
- - orchestration is another talk
-   - can be it's own bundle of ugly
+ - hub.docker.com got hacked a couple weeks ago
+
+ - security
+   - secrets
+     - not supported unless you're on swarm
+     - don't build secrets into your container
+   - container escapes are still possible
+   - vulnerability scanning is a new field
+ - backwards compatability
+   - docker maintains it's backwards compatability
+   - not guaranteed to work with older Linux components
+ - it's still Linux
+   - and you'll need to know a lot of it.
+   - file permissions/users
+   - process model
+   - init
+ - Docker Inc. needs to make money
+   - pushing enterprise tools
+ - File systems
+   - btrfs, aufs, overlay, overlay2, zfs?
+   - which one to use depends on your os
+ - engine runs as root
+   - oh exploitable
     </textarea>
 </section>
   
@@ -702,6 +723,13 @@ Are you devops? I have sadnessatscale.com and want to put DevOps on it.
       // - https://github.com/hakimel/reveal.js#configuration
       // - https://github.com/hakimel/reveal.js#dependencies
       Reveal.initialize({
+	margin: 0,
+	minScale: 1,
+	maxScale: 1,
+  width: 960,
+  center: false,
+  history: true,
+  height: "100%",
         dependencies: [
           { src: 'reveal.js-3.8.0/plugin/markdown/marked.js' },
           { src: 'reveal.js-3.8.0/plugin/markdown/markdown.js' },

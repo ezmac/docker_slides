@@ -38,7 +38,7 @@ html_start=$(cat <<EOF
 
     <link rel="stylesheet" href="reveal.js-3.8.0/css/reset.css">
     <link rel="stylesheet" href="reveal.js-3.8.0/css/reveal.css">
-    <link rel="stylesheet" href="reveal.js-3.8.0/css/theme/black.css">
+    <link rel="stylesheet" href="reveal.js-3.8.0/css/theme/solarized.css">
     <link rel="stylesheet" href="reveal-customize.css">
 
     <!-- Theme used for syntax highlighting of code -->
@@ -69,6 +69,13 @@ html_end=$(cat <<EOF
       // - https://github.com/hakimel/reveal.js#configuration
       // - https://github.com/hakimel/reveal.js#dependencies
       Reveal.initialize({
+	margin: 0,
+	minScale: 1,
+	maxScale: 1,
+  width: 960,
+  center: false,
+  history: true,
+  height: "100%",
         dependencies: [
           { src: 'reveal.js-3.8.0/plugin/markdown/marked.js' },
           { src: 'reveal.js-3.8.0/plugin/markdown/markdown.js' },

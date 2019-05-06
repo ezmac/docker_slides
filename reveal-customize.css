@@ -1,0 +1,22 @@
+h1 {
+  font-size: 1.0em !important;
+}
+h2 {
+  font-size: .9em !important;
+}
+h3 {
+  font-size: .7em !important;
+}
+h4 {
+  font-size: .5em !important;
+}
+h5 {
+  font-size: .4em !important;
+}
+h6 {
+  font-size: .3em !important;
+}
+ul {
+  font-size: .6em !important;
+}
+*{ align: left; }
