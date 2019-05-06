@@ -3,15 +3,18 @@
  - Tad Merchant
    DevOps Enginerd @ Cornell
    - I hate powerpoint
+   - I love Linux
 
  - Meta
-   - about docker, users of docker, history, etc
+   - History/What is docker
+   - What it does
  - Good; Woven into how to use Docker
    - using docker
-   - lots of demos
-   - digression on docker-compose
+   - a real use case for docker
  - Bad
+   - Why it's not perfect
  - Ugly
+   - When it's really bad
  - Reflection
 
- - Beer?
+I hope this talk leaves you with a good idea of what docker is, how to use it, and an idea of if it can help you.

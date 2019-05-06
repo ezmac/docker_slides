@@ -6,7 +6,7 @@
  - macOS
    - Docker Desktop should handle config for you
  - Windows
-   - You can switch between windows and linux containers
+   - You can switch between Windows and Linux containers
    - Sorry, you're on your own.
 
 ## References:

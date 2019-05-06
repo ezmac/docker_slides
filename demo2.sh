@@ -22,3 +22,5 @@ read
 echo -e "${red} Running \n ${lpurp}\"docker run -it -v \$PWD:/root/ ubuntu touch /root/zzz_new_file\" ${yellow}"
 docker run -it -v $PWD:/root/ ubuntu touch /root/zzz_new_file
 echo -e "${NC}"
+
+read
