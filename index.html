@@ -414,6 +414,7 @@ Simple as `docker run image`
    - Indirect
    - "Easy" to manage with docker
    - *allows volume drivers*
+   - sharing rw for multiple containers
 
 
 ## -v vs --mount
@@ -461,7 +462,9 @@ docker run `--link other_container:name` or `--link other_container`
 
 ## user defined networks
 docker network create internauts
+
 docker run `--network internauts container`
+
 docker run `--network internauts other_container`
 
 
@@ -603,12 +606,16 @@ Yes, I cited myself
   # Docker for devops
 
 - Test/Prod parity
-   - config pulled on container start
-   - git branch for test/prod deploy
-- Git + Jenkins = Automated deploy
+   - development branch = test environment
+   - master branch = prod
+   - secrets/config pulled on container start
+- Git + Jenkins = Continuous Deployment
+   - Any fail in pipeline aborts deploy
    - Build image/push to ECR
-   - use ELB and ECS container replacement for safe deploy
-   - side effect: one click re-deploy through Jenkins
+   - Trigger ECS deploy -> start new container
+   - New container registers with Load balancer when healthy
+   - Old container stops
+   - Side effect: one click re-deploy through Jenkins
 - Run sftp servers
    - https://github.com/atmoz/sftp
    - bind mount for persistance and keys
@@ -621,19 +628,18 @@ Yes, I cited myself
   <textarea data-template>
   # Docker for devops (part deux)
 
-- Git + Jenkins + docker
+- Git + Jenkins + docker = CI
    - automated npm audit
       - Fail job if `npm audit` fails
-- run tests against container pre deploy
-   - Fail job if tests fail
-- schedule rebuilds and deploys
+   - run tests against container on commit
+- Schedule rebuilds and deploys
    - up to date all the time
- - tag images with build number
-   - rollback means deploying previous build tag
-- scaling
-   - need more capacity? Add a server to the cluster
-   - need more load handling? Start more containers
-- flexible
+ - Tag images with build number
+   - Rollback means deploying previous build tag
+- Scaling
+   - Need more capacity? Add a server to the cluster
+   - Need more load handling? Start more containers
+- Flexible
    - ecs, kubernetes, rancher, docker enterprise
    - you decide the orchestration
     </textarea>
@@ -643,7 +649,7 @@ Yes, I cited myself
   <textarea data-template>
   # Bad parts of docker
 
-- Bind mounts on OSX are terribly slow
+- Bind mounts on OSX were terribly slow
    - Fsnotify may not work correctly
    - they're still working on it
 - Building images on Windows is terribly slow
@@ -670,10 +676,11 @@ Also, it's your company's enterprise solution?  yah, that's docker
 - kubernetes vs everyone else
    - and kubernetes is throwing heavy punches
 - open container initiative
-   - cri-o
-   - rkt
-   - docker engine
-   - containerd
+  - engines
+     - rkt
+     - runC
+     - containerd
+   - cri-o - provides pluggable interface for runtime engines
 - this is fine!
 
 ## sources
@@ -699,7 +706,6 @@ Also, it's your company's enterprise solution?  yah, that's docker
    - Public docker base images can have tons of vulnerabilities
      - up to you to patch constantly
 - Docker Inc. needs to make money
-   - pushing enterprise tools
     </textarea>
 </section>
   
@@ -711,18 +717,22 @@ Also, it's your company's enterprise solution?  yah, that's docker
    - file permissions/users
      - user namespace
    - process model
-     - look up the docker zombie problem
+     - look up the docker zombie problem [0]
      - init
 - backwards compatability
    - Docker is pretty backwards compatible with itself
    - Not with old kernels/Linuxes
 - File systems
-   - btrfs, aufs, overlay, overlay2, zfs?
+   - btrfs, aufs, devicemapper, overlay, overlay2, zfs?
 - engine runs as root
    - oh exploitable
 
 ## Demo
  - ./root_exploit.sh
+
+
+## sources
+ [0] https://blog.phusion.nl/2015/01/20/docker-and-the-pid-1-zombie-reaping-problem/
     </textarea>
 </section>
   
