@@ -3,31 +3,19 @@ networks:
   backend:
   frontend:
 services:
-
   app:
     build: ./                     # Build Dockerfile in current directory
-    environment:
-      MONGO_USER: root
-      MONGO_PASSWORD: example
-      MONGO_HOST: mongodb
-      MONGO_PORT: 27017
-      MONGO_DB_NAME: hello_world
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
+    env_file: ".env"
     networks:
       - frontend
       - backend
-
   mongodb:
     image: mongo
+    env_file: ".env"
     volumes:
       - $PWD/mongo_data:/data/db
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
     networks:
       - backend
-
   nginx:
     image: ployst/nginx-ssl-proxy # use image from hub.docker.com
     environment:

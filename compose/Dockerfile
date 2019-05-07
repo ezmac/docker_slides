@@ -1,4 +1,6 @@
 FROM node:alpine
-CMD node /app/app.js
+
 RUN npm install express mongodb
+
+CMD node /app/app.js
 COPY --chown=node:node app.js /app/

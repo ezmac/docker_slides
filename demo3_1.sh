@@ -13,3 +13,4 @@ echo -e " docker run --name app --rm --init --env-file=.env --link mongodb -p 43
 echo "visit http://localhost:4300/hello"
 docker run --name app --rm --init --env-file=.env --link mongodb -p 4300:4300 compose_app 2>/dev/null 1>/dev/null
 docker stop mongodb 2>/dev/null 1>/dev/null
+
