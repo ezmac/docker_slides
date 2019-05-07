@@ -58,7 +58,6 @@
   
   
   
-  
   <section data-markdown>
   <textarea data-template>
   ## The problem
@@ -270,6 +269,11 @@ A container is a running image
  - Supporting less technical users
  - Security
  - GUI applications
+
+
+## sources
+
+https://docs.docker.com/config/containers/multi-service_container/
     </textarea>
 </section>
   
@@ -512,20 +516,6 @@ Yes, I cited myself
   
   <section data-markdown>
   <textarea data-template>
-  # ENTRYPOINT vs CMD
- - `["exec", "form"]`
- - `"shell form"`
- - Don't use shell form
- - ENTRYPOINT is the main command for the image
-   - Usually set by base image; ["/bin/sh", "-c"]
- - CMD will be appended to entrypoint (if using exec form)
- - CMD is good for most purposes
- - ENTRYPOINT for advanced usage
-    </textarea>
-</section>
-  
-  <section data-markdown>
-  <textarea data-template>
   # Docker hub and repositories
  - repositories are a central store for images
  - hub.docker.com (public)
@@ -566,14 +556,14 @@ Yes, I cited myself
   <textarea data-template>
   # Docker for devops
 
- - Test/Prod parity
+- Test/Prod parity
    - config pulled on container start
    - git branch for test/prod deploy
- - Git + Jenkins = Automated deploy
+- Git + Jenkins = Automated deploy
    - Build image/push to ECR
    - use ELB and ECS container replacement for safe deploy
    - side effect: one click re-deploy through Jenkins
- - Run sftp servers
+- Run sftp servers
    - https://github.com/atmoz/sftp
    - bind mount for persistance and keys
    - configured through environment
@@ -585,19 +575,19 @@ Yes, I cited myself
   <textarea data-template>
   # Docker for devops (part deux)
 
- - Git + Jenkins + docker
+- Git + Jenkins + docker
    - automated npm audit
-     - Fail job if `npm audit` fails
- - run tests against container pre deploy
+      - Fail job if `npm audit` fails
+- run tests against container pre deploy
    - Fail job if tests fail
- - schedule rebuilds and deploys
+- schedule rebuilds and deploys
    - up to date all the time
  - tag images with build number
    - rollback means deploying previous build tag
- - scaling
+- scaling
    - need more capacity? Add a server to the cluster
    - need more load handling? Start more containers
- - flexible
+- flexible
    - ecs, kubernetes, rancher, docker enterprise
    - you decide the orchestration
     </textarea>
@@ -607,18 +597,19 @@ Yes, I cited myself
   <textarea data-template>
   # Bad parts of docker
 
- - Bind mounts on OSX are terribly slow
+- Bind mounts on OSX are terribly slow
    - Fsnotify may not work correctly
    - they're still working on it
- - Building images on Windows is terribly slow
- - Docker is still primarily for Linux
- - Public docker base images can have tons of vulnerabilities
+- Building images on Windows is terribly slow
+- Docker is still primarily for Linux
+- Public docker base images can have tons of vulnerabilities
    - up to you to patch constantly
- - It's still "bleeding edge" and moving fast
+- It's still "bleeding edge" and moving fast
    - date check everything you read
- - Security tools haven't caught up yet
- - Many approaches to using it; no consensus on correct way
- - Suffering from success
+- Security tools haven't caught up yet
+- Many approaches to using it; no consensus on correct way
+- Suffering from success
+
 
 ## My notes
 You know how sometimes you get rushed on a project and you have to cut corners? then people demand new features but you can't take time to rewrite?
@@ -632,15 +623,15 @@ Also, it's your company's enterprise solution?  yah, that's docker
   <textarea data-template>
   # The battle for dominance
 
- - containerd vs cri0 vs rkt vs ...
- - kubernetes vs everyone else
+- containerd vs cri0 vs rkt vs ...
+- kubernetes vs everyone else
    - and kubernetes is throwing heavy punches
- - open container initiative
+- open container initiative
    - cri-o
    - rkt
    - docker engine
    - containerd
- - this is fine!
+- this is fine!
 
 ## sources
  - https://www.opencontainers.org/
@@ -651,29 +642,32 @@ Also, it's your company's enterprise solution?  yah, that's docker
   <textarea data-template>
   # Ugly
 
- - hub.docker.com got hacked a couple weeks ago
+- hub.docker.com got hacked a couple weeks ago
 
- - security
+- security
    - secrets
      - not supported unless you're on swarm
      - don't build secrets into your container
    - container escapes are still possible
    - vulnerability scanning is a new field
- - backwards compatability
+- backwards compatability
    - docker maintains it's backwards compatability
    - not guaranteed to work with older Linux components
- - it's still Linux
+- it's still Linux
    - and you'll need to know a lot of it.
    - file permissions/users
    - process model
    - init
- - Docker Inc. needs to make money
+- Docker Inc. needs to make money
    - pushing enterprise tools
- - File systems
+- File systems
    - btrfs, aufs, overlay, overlay2, zfs?
    - which one to use depends on your os
- - engine runs as root
+- engine runs as root
    - oh exploitable
+
+## Demo
+ - ./root_exploit.sh
     </textarea>
 </section>
   
